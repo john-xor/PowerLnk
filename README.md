@@ -1,5 +1,5 @@
 # PowerLnk
-generates a .Lnk file that executes a reverse shell in powershell
+generates a .Lnk file that executes a reverse shell in hidden powershell window
 
 # Useage
 script take two parameters -ip and -port where ip and port is the device you are listening on
