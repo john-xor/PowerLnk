@@ -1,5 +1,5 @@
 # PowerLnk
-generates a .Lnk file that executes a reverse shell in powershell using a caesar cipher as obfuscation, starts minimized then quickly hides the window
+generates a .Lnk file that executes a reverse shell in powershell using a caesar cipher as obfuscation, starts minimized then quickly hides the window. Tool is intended for strictly lawful purposes only. I'm not responsible for how it is used.
 
 # Useage
 script takes two parameters -ip and -port where ip and port is the device you are listening on
