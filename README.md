@@ -11,4 +11,4 @@ script takes two parameters -ip and -port where ip and port is the device you ar
 scored a 4/62 on virus total, intended for second stagers to be executed after initial callback due to including more to the lnk increases detections, so amsi, shellcode etc should be run after inital callback. I'll leave that up to yall to implement that for whatever engagement you're doing.
 
 
-I'm working on a python server side console for c2 but in the meantime you can input your metasploit multi handler meterpreter etc
+I'm working on a python server side console for c2
