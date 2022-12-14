@@ -1,4 +1,4 @@
-param([string]$ip,[string]$port,[int]$offset=4)
+param([string]$ip,[string]$port,[int]$offset=3)
 $ErrorActionPreference="SilentlyContinue"
 
 #this can be modified to your liking, however lnk files have a limit on argument length so don't make it too long
