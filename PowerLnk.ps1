@@ -23,7 +23,6 @@ $fix = @'
 function hide{
     param([string]$plaintext)
     (($plaintext-split''|%{[int][char]$_+$offset}|%{[char]$_})-join'' -replace '`','``' -replace "'",$fix) -replace "^",$start -replace '$',$end -replace 'johnxor','_'
-
 }
 
 $strings = $strings|%{hide($_)}
